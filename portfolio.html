@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Vincent</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            /* Color Palette */
+            --black: #000000;
+            --neon-red: #00a2ff;
+            --neon-glow: rgba(0, 255, 191, 0.7);
+            --neon-light:  rgba(81, 255, 0, 0.3);
+            --white: #FFFFFF;
+            --gray-dark: #1a1a1a;
+            --gray-light: #f0f0f0;
+            
+            /* Spacing */
+            --section-padding: 100px 20px;
+            --container-max: 1200px;
+            
+            /* Effects */
+            --glow: 0 0 20px var(--neon-glow);
+            --glow-strong: 0 0 40px var(--neon-glow);
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --shadow-strong: 0 20px 50px rgba(0, 0, 0, 0.5);
+            
+            /* Animations */
+            --transition-fast: 0.3s ease;
+            --transition-medium: 0.5s ease;
+            --transition-slow: 0.8s ease;
+        }
+
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-weight: 400;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            background: linear-gradient(135deg, var(--white), var(--neon-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* ===== LAYOUT COMPONENTS ===== */
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: var(--section-padding);
+            position: relative;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(196, 230, 247, 0.2);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .logo span {
+            color: var(--neon-red);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: capitalize;
+            letter-spacing: 1px;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-red);
+            transition: width var(--transition-medium);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-red);
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 2px solid var(--neon-red);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            transition: all var(--transition-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--neon-light), transparent);
+            transition: left var(--transition-slow);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background: var(--neon-red);
+            box-shadow: var(--glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--neon-red);
+            box-shadow: var(--glow);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            box-shadow: var(--glow-strong);
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 0, 51, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all var(--transition-medium);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 51, 0.1), transparent);
+            transition: left var(--transition-slow);
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-red);
+            box-shadow: var(--glow);
+        }
+
+        /* ===== PORTFOLIO HERO ===== */
+        .portfolio-hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 150px 20px 80px;
+            background: linear-gradient(135deg, rgba(255,0,51,0.1) 0%, rgba(0,0,0,0.8) 50%, rgba(255,0,51,0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* ===== PORTFOLIO FILTER ===== */
+        .portfolio-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 2px solid var(--neon-red);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all var(--transition-medium);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--neon-red);
+            box-shadow: var(--glow);
+        }
+
+        /* ===== PORTFOLIO GRID ===== */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            transition: all var(--transition-medium);
+            height: 300px;
+            border: 1px solid rgba(255, 0, 51, 0.2);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-medium);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 2rem 1.5rem 1.5rem;
+            transform: translateY(100%);
+            transition: transform var(--transition-medium);
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-item h3 {
+            color: var(--neon-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-item p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .portfolio-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        /* ===== MODAL STYLES ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--black);
+            border: 2px solid var(--neon-red);
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--glow-strong);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color var(--transition-fast);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-modal:hover {
+            color: var(--neon-red);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 0, 51, 0.3);
+        }
+
+        /* ===== TYPEWRITER EFFECT ===== */
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid var(--neon-red);
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret 0.75s step-end infinite;
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--neon-red) }
+        }
+
+        /* ===== FADE IN ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all var(--transition-slow);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all var(--transition-slow);
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all var(--transition-slow);
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .portfolio-hero {
+                padding: 120px 20px 60px;
+            }
+            
+            .portfolio-filter {
+                gap: 0.5rem;
+            }
+            
+            .filter-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .typewriter {
+                font-size: 1.2rem;
+                white-space: normal;
+                border-right: none;
+                animation: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section {
+                padding: 60px 20px;
+            }
+            
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+         /* ===== SOCIAL MEDIA SECTION ===== */
+.social-media-section {
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 0, 51, 0.2);
+    padding: 4rem 0 3rem;
+    margin-top: 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-media-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-red), transparent);
+}
+
+.social-icons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.social-icon {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: var(--white);
+    text-decoration: none;
+    transition: all var(--transition-medium);
+    font-size: 1.4rem;
+    backdrop-filter: blur(10px);
+}
+
+/* WhatsApp - Green */
+.social-icon:nth-child(1) {
+    color: #25D366;
+    border-color: rgba(37, 211, 102, 0.4);
+    background: rgba(37, 211, 102, 0.1);
+}
+
+/* Facebook - Blue */
+.social-icon:nth-child(2) {
+    color: #1877F2;
+    border-color: rgba(24, 119, 242, 0.4);
+    background: rgba(24, 119, 242, 0.1);
+}
+
+/* TikTok - Black/Red */
+.social-icon:nth-child(3) {
+    color: #000000;
+    border-color: rgba(255, 0, 80, 0.4);
+    background: rgba(255, 0, 80, 0.1);
+}
+
+/* X/Twitter - Black */
+.social-icon:nth-child(4) {
+    color: #000000;
+    border-color: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Instagram - Gradient */
+.social-icon:nth-child(5) {
+    background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(128, 0, 128, 0.1);
+}
+
+/* Hover Effects */
+.social-icon:hover {
+    background: var(--neon-red) !important;
+    border-color: var(--neon-red) !important;
+    transform: translateY(-8px) scale(1.1);
+    box-shadow: 
+        0 10px 25px var(--neon-glow),
+        0 0 30px var(--neon-glow),
+        inset 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.social-icon:hover i {
+    color: var(--white) !important;
+    -webkit-text-fill-color: var(--white) !important;
+    transform: scale(1.1);
+}
+
+/* Pulse animation on hover */
+.social-icon:hover::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 2px solid var(--neon-red);
+    border-radius: 50%;
+    animation: pulse 1.5s ease-out infinite;
+    opacity: 0;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.3);
+        opacity: 0;
+    }
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    bottom: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: var(--white);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-medium);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--neon-red);
+    box-shadow: 0 5px 15px rgba(255, 0, 51, 0.3);
+    z-index: 10;
+}
+
+.tooltip::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid var(--neon-red);
+}
+
+.social-icon:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    bottom: -40px;
+}
+
+/* Follow text */
+.social-follow-text {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    margin: 0;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Social section background glow effect */
+.social-media-section::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 1px;
+    background: radial-gradient(ellipse at center, var(--neon-red) 0%, transparent 70%);
+    filter: blur(20px);
+    opacity: 0.3;
+    z-index: 1;
+}
+
+/* ===== TABLET STYLES (768px and below) ===== */
+@media (max-width: 768px) {
+    .social-media-section {
+        padding: 3rem 0 2rem;
+        margin-top: 3rem;
+    }
+    
+    .social-icons-container {
+        gap: 1.5rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .social-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.3rem;
+    }
+    
+    .tooltip {
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+        bottom: -42px;
+    }
+    
+    .social-icon:hover .tooltip {
+        bottom: -38px;
+    }
+    
+    .social-follow-text {
+        font-size: 0.9rem;
+    }
+    
+    /* Reduce hover effects on tablet */
+    .social-icon:hover {
+        transform: translateY(-5px) scale(1.05);
+    }
+}
+
+/* ===== MOBILE STYLES (480px and below) ===== */
+@media (max-width: 480px) {
+    .social-media-section {
+        padding: 2.5rem 0 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .social-icons-container {
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .social-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .tooltip {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+        bottom: -40px;
+    }
+    
+    .social-icon:hover .tooltip {
+        bottom: -36px;
+    }
+    
+    .social-follow-text {
+        font-size: 0.85rem;
+        padding: 0 1rem;
+    }
+    
+    /* Further reduce hover effects on mobile */
+    .social-icon:hover {
+        transform: translateY(-3px) scale(1.03);
+    }
+    
+    .social-icon:hover::after {
+        display: none; /* Remove pulse animation on mobile for performance */
+    }
+}
+/* X/Twitter icon - White background for visibility */
+.social-icon:nth-child(4) { 
+    color: #000000;
+    background: rgba(15, 13, 13, 0.9); /* White background */
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Ensure the X icon stays visible on hover */
+.social-icon:nth-child(4):hover i {
+    color: #000000 !important; /* Keep black on hover */
+    -webkit-text-fill-color: #000000 !important;
+}
+/* ===== SMALL MOBILE STYLES (360px and below) ===== */
+@media (max-width: 360px) {
+    .social-icons-container {
+        gap: 0.8rem;
+    }
+    
+    .social-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+    
+    .tooltip {
+        font-size: 0.7rem;
+        padding: 0.35rem 0.7rem;
+        bottom: -38px;
+    }
+    
+    .social-icon:hover .tooltip {
+        bottom: -34px;
+    }
+    
+    .social-follow-text {
+        font-size: 0.8rem;
+    }
+}
+
+/* ===== LARGE DESKTOP STYLES (1200px and above) ===== */
+@media (min-width: 1200px) {
+    .social-icons-container {
+        gap: 2.5rem;
+    }
+    
+    .social-icon {
+        width: 65px;
+        height: 65px;
+        font-size: 1.5rem;
+    }
+    
+    .tooltip {
+        font-size: 0.9rem;
+        padding: 0.7rem 1.4rem;
+    }
+}
+
+/* ===== ACCESSIBILITY AND PERFORMANCE ===== */
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    .social-icon {
+        transition: none;
+    }
+    
+    .social-icon:hover {
+        transform: none;
+    }
+    
+    .social-icon:hover::after {
+        animation: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .social-icon {
+        border-width: 3px;
+    }
+    
+    .social-icon:nth-child(1) { border-color: #25D366; }
+    .social-icon:nth-child(2) { border-color: #1877F2; }
+    .social-icon:nth-child(3) { border-color: #FF0050; }
+    .social-icon:nth-child(4) { border-color: #000000; }
+    .social-icon:nth-child(5) { border-color: #E1306C; }
+}
+
+/* Dark mode support (already dark, but for completeness) */
+@media (prefers-color-scheme: dark) {
+    .social-icon {
+        background: rgba(255, 255, 255, 0.08);
+    }
+}
+
+/* Print styles */
+@media print {
+    .social-media-section {
+        display: none;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div class="particles-container" id="particles"></div>
+    
+    <!-- Custom Cursor -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">Vinnycent<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Portfolio Hero -->
+    <section class="portfolio-hero">
+        <div class="container">
+            <h1 class="fade-in">My Portfolio</h1>
+            <div class="typewriter">Showcasing my latest projects and creative work</div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="section">
+        <div class="container">
+            <h2>Featured Projects</h2>
+            
+            <!-- Filter Buttons -->
+            <div class="portfolio-filter">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="web">Web Development</button>
+                <button class="filter-btn" data-filter="design">Design</button>
+                <button class="filter-btn" data-filter="database">Database</button>
+                <button class="filter-btn" data-filter="security">Security</button>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="portfolio-grid">
+                <!-- Project 1 - E-commerce -->
+                <div class="portfolio-item fade-in" data-category="web">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="E-Commerce Platform">
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>E-Commerce Platform</h3>
+                            <p>Full-stack e-commerce solution with payment integration and admin dashboard</p>
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">React</span>
+                                <span class="portfolio-tag">Node.js</span>
+                                <span class="portfolio-tag">Supabase</span>
+                            </div>
+                            <button class="btn" onclick="openModal('modal1')">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 - Brand Identity -->
+                <div class="portfolio-item fade-in" data-category="design">
+                    <img src="https://images.unsplash.com/photo-1634942537034-2531766767d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1224&q=80" alt="Brand Identity">
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>Brand Identity Package</h3>
+                            <p>Complete branding solution including logo, guidelines, and marketing materials</p>
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">Illustrator</span>
+                                <span class="portfolio-tag">Photoshop</span>
+                                <span class="portfolio-tag">Branding</span>
+                            </div>
+                            <button class="btn" onclick="openModal('modal2')">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 - Database System -->
+                <div class="portfolio-item fade-in" data-category="database">
+                    <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1136&q=80" alt="Database System">
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>Inventory Management System</h3>
+                            <p>Custom database solution with real-time tracking and reporting features</p>
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">PostgreSQL</span>
+                                <span class="portfolio-tag">Supabase</span>
+                                <span class="portfolio-tag">API</span>
+                            </div>
+                            <button class="btn" onclick="openModal('modal3')">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 - Security -->
+                <div class="portfolio-item fade-in" data-category="security">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Security Audit">
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>Security Audit & Training</h3>
+                            <p>Comprehensive security assessment and employee training program</p>
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">Cybersecurity</span>
+                                <span class="portfolio-tag">Training</span>
+                                <span class="portfolio-tag">Audit</span>
+                            </div>
+                            <button class="btn" onclick="openModal('modal4')">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 - Portfolio Website -->
+                <div class="portfolio-item fade-in" data-category="web">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80" alt="Portfolio Website">
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>Portfolio Website</h3>
+                            <p>Modern, responsive portfolio website with custom animations</p>
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">HTML/CSS</span>
+                                <span class="portfolio-tag">JavaScript</span>
+                                <span class="portfolio-tag">Animations</span>
+                            </div>
+                            <button class="btn" onclick="openModal('modal5')">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 - UI Design -->
+                <div class="portfolio-item fade-in" data-category="design">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1100&q=80" alt="UI Design">
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>Mobile App UI Design</h3>
+                            <p>User interface design for a fitness tracking mobile application</p>
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">Figma</span>
+                                <span class="portfolio-tag">UI/UX</span>
+                                <span class="portfolio-tag">Mobile</span>
+                            </div>
+                            <button class="btn" onclick="openModal('modal6')">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Modals -->
+    <!-- Modal 1 -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('modal1')">&times;</button>
+            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="E-Commerce Platform" class="modal-image">
+            <h2>E-Commerce Platform</h2>
+            <p>A comprehensive e-commerce solution built with modern technologies including React, Node.js, and Supabase. Features include user authentication, product management, shopping cart, payment integration, and admin dashboard.</p>
+            <h3>Technologies Used:</h3>
+            <div class="portfolio-tags">
+                <span class="portfolio-tag">React</span>
+                <span class="portfolio-tag">Node.js</span>
+                <span class="portfolio-tag">Supabase</span>
+                <span class="portfolio-tag">Stripe API</span>
+                <span class="portfolio-tag">Material-UI</span>
+            </div>
+            <h3>Key Features:</h3>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li>User authentication and authorization</li>
+                <li>Product catalog with search and filtering</li>
+                <li>Shopping cart and checkout process</li>
+                <li>Payment processing with Stripe</li>
+                <li>Admin dashboard for inventory management</li>
+                <li>Order tracking and management</li>
+            </ul>
+            <a href="#" class="btn btn-primary">View Live Project</a>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('modal2')">&times;</button>
+            <img src="https://images.unsplash.com/photo-1634942537034-2531766767d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1224&q=80" alt="Brand Identity" class="modal-image">
+            <h2>Brand Identity Package</h2>
+            <p>Complete branding solution for a tech startup, including logo design, brand guidelines, and marketing materials that establish a strong visual identity across all platforms.</p>
+            <h3>Tools Used:</h3>
+            <div class="portfolio-tags">
+                <span class="portfolio-tag">Adobe Illustrator</span>
+                <span class="portfolio-tag">Adobe Photoshop</span>
+                <span class="portfolio-tag">Figma</span>
+                <span class="portfolio-tag">Branding</span>
+            </div>
+            <h3>Deliverables:</h3>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li>Primary and secondary logo designs</li>
+                <li>Complete brand style guide</li>
+                <li>Business cards and stationery</li>
+                <li>Social media templates</li>
+                <li>Marketing collateral</li>
+                <li>Brand application examples</li>
+            </ul>
+            <a href="#" class="btn btn-primary">View Case Study</a>
+        </div>
+    </div>
+    <!-- Social Media Section -->
+<section class="social-media-section">
+    <div class="container">
+        <div class="social-icons-container">
+            <!-- WhatsApp -->
+            <a href="https://wa.me/0758552189" class="social-icon" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-whatsapp"></i>
+                <span class="tooltip">WhatsApp</span>
+            </a>
+            
+            <!-- Facebook -->
+            <a href="https://facebook.com/imbosa Vinnycent" class="social-icon" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-facebook-f"></i>
+                <span class="tooltip">Facebook</span>
+            </a>
+            
+            <!-- TikTok -->
+            <a href="https://tiktok.com/@vincentimbosa1" class="social-icon" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-tiktok"></i>
+                <span class="tooltip">TikTok</span>
+            </a>
+            
+            <!-- X (Twitter) -->
+            <a href="https://twitter.com/@Vin_Imbosa" class="social-icon" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-x-twitter"></i>
+                <span class="tooltip">X (Twitter)</span>
+            </a>
+            
+            <!-- Instagram -->
+            <a href="https://instagram.com/vincentimbosa" class="social-icon" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-instagram"></i>
+                <span class="tooltip">Instagram</span>
+            </a>
+        </div>
+        
+        <p class="social-follow-text">Follow me on social media</p>
+    </div>
+</section>
+
+    <!-- Add similar modals for other projects -->
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Portfolio Filter Functionality
+        function initPortfolioFilter() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active button
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filter = this.getAttribute('data-filter');
+
+                    // Filter items
+                    portfolioItems.forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.style.display = 'block';
+                            setTimeout(() => item.style.opacity = '1', 100);
+                        } else {
+                            item.style.display = 'none';
+                            item.style.opacity = '0';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+            animatedElements.forEach(el => observer.observe(el));
+            
+            // Initialize portfolio filter
+            initPortfolioFilter();
+            
+            // Create particles
+            createParticles();
+            
+            // Initialize cursor glow
+            initCursorGlow();
+        });
+
+        // Particle creation function
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 20 + 5;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const opacity = Math.random() * 0.5 + 0.1;
+                const animationDelay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.opacity = opacity;
+                particle.style.animationDelay = `${animationDelay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Cursor glow effect
+        function initCursorGlow() {
+            const cursorGlow = document.getElementById('cursorGlow');
+            
+            document.addEventListener('mousemove', (e) => {
+                cursorGlow.style.left = `${e.clientX}px`;
+                cursorGlow.style.top = `${e.clientY}px`;
+            });
+            
+            // Add hover effect for interactive elements
+            const interactiveElements = document.querySelectorAll('a, button, .portfolio-item');
+            
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorGlow.style.transform = 'translate(-50%, -50%) scale(2)';
+                    cursorGlow.style.opacity = '0.8';
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursorGlow.style.transform = 'translate(-50%, -50%) scale(1)';
+                    cursorGlow.style.opacity = '0.5';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
